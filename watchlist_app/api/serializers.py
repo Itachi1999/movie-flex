@@ -1,19 +1,26 @@
 from rest_framework import serializers
-from watchlist_app.models import Movie
+from watchlist_app.models import DigitalContent, StreamingPlatform
 
 
-class MovieSerializer(serializers.ModelSerializer):
+class DigitalContentSerializer(serializers.ModelSerializer):
     len_title = serializers.SerializerMethodField()
     
     class Meta:
-        model = Movie
+        model = DigitalContent
         fields = '__all__'
         # exclude = ['active']
         
     def get_len_title(self, object):
         return len(object.title) 
+    
 
-# class MovieSerializer(serializers.Serializer):
+class StreamingPlatformSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StreamingPlatform
+        fields = '__all__'
+        
+
+# class DigitalContentSerializer(serializers.Serializer):
 #     id = serializers.IntegerField(read_only=True)
 #     title = serializers.CharField()
 #     description = serializers.CharField()
@@ -21,7 +28,7 @@ class MovieSerializer(serializers.ModelSerializer):
 #     year = serializers.IntegerField()
     
 #     def create(self, validated_data):
-#         return Movie.objects.create(**validated_data)
+#         return DigitalContent.objects.create(**validated_data)
     
 #     def update(self, instance, validated_data):
 #         instance.title = validated_data.get('title', instance.title)
@@ -36,7 +43,7 @@ class MovieSerializer(serializers.ModelSerializer):
 #             raise serializers.ValidationError('Title and description cannot be the same')
     
 #     def validate_title(self, value):
-#         if Movie.objects.filter(title=value).exists():
+#         if DigitalContent.objects.filter(title=value).exists():
 #             raise serializers.ValidationError('Title already exists')
 #         elif len(value) < 2:
 #             raise serializers.ValidationError('Title must be at least 2 characters')
